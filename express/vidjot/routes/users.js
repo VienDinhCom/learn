@@ -1,4 +1,7 @@
 import { Router } from 'express';
+import bcrypt from 'bcryptjs';
+
+import User from '../models/user';
 
 const router = Router();
 
@@ -27,7 +30,24 @@ router.post('/register', (req, res) => {
       errors, name, email, password, password2,
     });
   } else {
-    res.send('Passed');
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+    new User({ name, email, password: hash })
+      .save()
+      .then(() => {
+        req.flash('success_msg', 'You have successfully registered');
+        res.redirect('/users/login');
+      })
+      .catch((err) => {
+        if (err.code === 11000) {
+          errors.push({ text: 'The email has been taken' });
+          res.render('users/register', {
+            errors, name, email, password, password2,
+          });
+        } else {
+          throw err;
+        }
+      });
   }
 });
 

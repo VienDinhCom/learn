@@ -39,7 +39,8 @@ router.post('/', (req, res) => {
       .then(() => {
         req.flash('success_msg', 'Video idea added');
         res.redirect('/ideas');
-      });
+      })
+      .catch((err) => { throw err; });
   }
 });
 
