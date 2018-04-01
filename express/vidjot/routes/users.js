@@ -16,6 +16,13 @@ router.get('/register', (req, res) => {
   res.render('users/register');
 });
 
+// User Logout Route
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'You are logged out.');
+  res.redirect('/');
+});
+
 // Login Form
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/ideas',

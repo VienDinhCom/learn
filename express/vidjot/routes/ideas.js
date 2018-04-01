@@ -1,12 +1,17 @@
 import { Router } from 'express';
+
 import Idea from '../models/idea';
+import { ensureAuthentication } from '../helpers/auth';
 
 const router = Router();
+
+// Ensure authentication
+router.use('/', ensureAuthentication, (req, res, next) => next());
 
 // Idea Index Route
 router.get('/', (req, res) => {
   Idea
-    .find({})
+    .find({ user: req.user.id })
     .sort({ date: 'desc' })
     .then(ideas => res.render('ideas/index', { ideas }));
 });
@@ -20,7 +25,14 @@ router.get('/add', (req, res) => {
 router.get('/edit/:id', (req, res) => {
   Idea
     .findOne({ _id: req.params.id })
-    .then(idea => res.render('ideas/edit', { idea }));
+    .then((idea) => {
+      if (idea.user !== req.user.id) {
+        req.flash('error_msg', 'You don\'t have permission');
+        res.redirect('/ideas');
+      } else {
+        res.render('ideas/edit', { idea });
+      }
+    });
 });
 
 // Add Form
@@ -34,7 +46,7 @@ router.post('/', (req, res) => {
   if (errors.length) {
     res.render('ideas/add', { errors, title, details });
   } else {
-    new Idea({ title, details })
+    new Idea({ title, details, user: req.user.id })
       .save()
       .then(() => {
         req.flash('success_msg', 'Video idea added');
