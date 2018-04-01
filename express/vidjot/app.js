@@ -7,6 +7,7 @@ import flash from 'connect-flash';
 import session from 'express-session';
 import path from 'path';
 
+import passport from './config/passport';
 import ideasRouter from './routes/ideas';
 import usersRouter from './routes/users';
 
@@ -36,11 +37,16 @@ app.use(methodOverride('_method'));
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(flash());
 
+// Passport midleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Global variables
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
   next();
 });
 

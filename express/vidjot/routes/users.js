@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 
+import passport from '../config/passport';
 import User from '../models/user';
 
 const router = Router();
@@ -14,6 +15,13 @@ router.get('/login', (req, res) => {
 router.get('/register', (req, res) => {
   res.render('users/register');
 });
+
+// Login Form
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/ideas',
+  failureRedirect: '/users/login',
+  failureFlash: true,
+}));
 
 // Register Form
 router.post('/register', (req, res) => {
