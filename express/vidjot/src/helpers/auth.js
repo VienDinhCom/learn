@@ -1,4 +1,4 @@
-export default {};
+export default null;
 
 export const ensureAuthentication = (req, res, next) => {
   if (req.isAuthenticated()) return next();

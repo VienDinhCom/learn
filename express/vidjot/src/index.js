@@ -8,14 +8,15 @@ import session from 'express-session';
 import path from 'path';
 
 import passport from './config/passport';
+import database from './config/database';
 import ideasRouter from './routes/ideas';
 import usersRouter from './routes/users';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/vidjot')
+mongoose.connect(database.mongoURI)
   .then(() => console.log('MongoDB connected...')) // eslint-disable-line
   .catch(err => console.log(err)); // eslint-disable-line
 
@@ -28,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // Method Override middleware
 app.use(methodOverride('_method'));
@@ -65,6 +66,6 @@ app.get('/about', (req, res) => {
 app.use('/ideas', ideasRouter);
 app.use('/users', usersRouter);
 
-app.listen(3000, () => {
+app.listen(port, () => {
   console.log(`Server started on port ${port}`); // eslint-disable-line
 });
