@@ -1,11 +1,11 @@
-import express from 'express';
-import exphbs from 'express-handlebars';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import methodOverride from 'method-override';
-import flash from 'connect-flash';
-import session from 'express-session';
 import path from 'path';
+import express from 'express';
+import mongoose from 'mongoose';
+import flash from 'connect-flash';
+import bodyParser from 'body-parser';
+import session from 'express-session';
+import exphbs from 'express-handlebars';
+import methodOverride from 'method-override';
 
 import passport from './config/passport';
 import database from './config/database';
@@ -21,7 +21,12 @@ mongoose.connect(database.mongoURI)
   .catch(err => console.log(err)); // eslint-disable-line
 
 // Handlebars Middleware
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.engine('handlebars', exphbs({
+  partialsDir: path.join(__dirname, 'views/partials/'),
+  layoutsDir: path.join(__dirname, 'views/layouts/'),
+  defaultLayout: 'main',
+}));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'handlebars');
 
 // Body parser middleware
@@ -29,7 +34,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Static folder
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Method Override middleware
 app.use(methodOverride('_method'));
