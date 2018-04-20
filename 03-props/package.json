@@ -1,0 +1,31 @@
+{
+  "name": "01-hello-react",
+  "version": "1.0.0",
+  "description": "Hello React",
+  "main": "program.js",
+  "dependencies": {
+    "babel": "^5.8.23",
+    "express": "^4.13.3",
+    "body-parser": "^1.14.1",
+    "express-react-views": "^0.9.0",
+    "react": "^0.14.2",
+    "react-dom": "^0.14.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxvien/Learn-React.git"
+  },
+  "keywords": [
+    "React"
+  ],
+  "author": "Maxvien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maxvien/Learn-React/issues"
+  },
+  "homepage": "https://github.com/Maxvien/Learn-React#readme"
+}
