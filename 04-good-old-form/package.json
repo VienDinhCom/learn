@@ -1,0 +1,26 @@
+{
+  "name": "learn-expressjs",
+  "version": "1.0.0",
+  "description": "Learn Express.js Basic",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxvien/Learn-Express.js-Basic.git"
+  },
+  "keywords": [
+    "ExpressJS"
+  ],
+  "author": "Maxvien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maxvien/Learn-Express.js-Basic/issues"
+  },
+  "homepage": "https://github.com/Maxvien/Learn-Express.js-Basic#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3"
+  }
+}
