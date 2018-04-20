@@ -1,0 +1,23 @@
+import { Router } from 'express';
+import passport from '../config/passport';
+
+const router = Router();
+
+router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+router.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => res.redirect('/dashboard'));
+
+router.get('/verify', (req, res) => {
+  if (req.user) {
+    res.send(req.user);
+  } else {
+    res.send('Not auth');
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+export default router;
