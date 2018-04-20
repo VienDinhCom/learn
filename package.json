@@ -1,0 +1,22 @@
+{
+  "name": "go",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp"
+  },
+  "devDependencies": {
+    "buffer-replace": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-folders": "^1.1.0",
+    "gulp-indent": "^1.0.1",
+    "gulp-inject-string": "^1.1.1",
+    "gulp-insert": "^0.5.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-tap": "^1.0.1",
+    "gulp-uglify": "^3.0.0"
+  }
+}
