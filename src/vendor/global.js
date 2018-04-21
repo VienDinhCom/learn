@@ -2,10 +2,10 @@
   $.fn.extend({
     exists: function( yes, no ) {
       if ( 0 < this.length ) {
-        yes();
+        yes.call( this );
       } else if ( no ) {
-        no();
+        no.call( this );
       }
     }
   });
-})( $ );
+})( jQuery );

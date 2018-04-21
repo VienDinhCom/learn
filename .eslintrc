@@ -7,7 +7,8 @@
 		"func-names": "off",
 		"no-undef": "error",
 		"spaced-comment": "off",
-		"wrap-iife":"off"
+		"wrap-iife":"off",
+		"lines-around-comment":"off"
   },
   "globals": {
     "$": true
