@@ -1,17 +1,18 @@
 const fs = require('fs');
 const path = require('path');
-
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-var sass = require('gulp-sass');
-var insert = require('gulp-insert');
-var inject = require('gulp-inject-string');
-var indent = require("gulp-indent");
-var tap = require("gulp-tap");
+const gulp = require('gulp');
+const concat = require('gulp-concat');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
+const sass = require('gulp-sass');
+const insert = require('gulp-insert');
+const inject = require('gulp-inject-string');
+const indent = require("gulp-indent");
+const eslint = require('gulp-eslint');
+const tap = require("gulp-tap");
 const bufferReplace = require('buffer-replace');
 const gulpStylelint = require('gulp-stylelint');
+const autoprefixer = require('gulp-autoprefixer');
 const blocksDir = 'src/blocks';
 
 gulp.task('scripts', function () {
@@ -22,19 +23,22 @@ gulp.task('scripts', function () {
 
     return gulp.src(blocks)
         .pipe(sourcemaps.init())
+        .pipe(eslint())
+        .pipe(eslint.format())
         .pipe(indent({
             tabs: false,
             amount: 2
         }))
-        .pipe(insert.prepend('$( ${block} ).exists( function() {\n'))
+        .pipe(insert.prepend('$( ${#block} ).exists( function() {\n'))
         .pipe(insert.append('\n});'))
         .pipe(tap(function (file, t) {
 
             const block = `'.${path.basename(file.path).replace(path.extname(file.path), '')}'`;
 
-            file.contents = bufferReplace(Buffer(file.contents), '${block}', block);
+            file.contents = bufferReplace(Buffer(file.contents), '${#block}', block);
         }))
         .pipe(concat('blocks.js', { newLine: '\n\n' }))
+        .pipe(eslint({ fix: true }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/assets'));
 });
@@ -48,13 +52,33 @@ gulp.task('styles', function () {
 
     return gulp.src(blocks)
         .pipe(sourcemaps.init())
-        .pipe(sass({ outputStyle: 'expanded'}).on('error', sass.logError))
-        .pipe(concat('blocks.css', { newLine: '\n' }))
-        .pipe(gulpStylelint({
-            reporters: [
-                { formatter: 'string', console: true }
-            ]
+        .pipe(tap(function (file, t) {
+
+            const block = `.${path.basename(file.path).replace(path.extname(file.path), '')}`;
+
+            file.contents = bufferReplace(Buffer(file.contents), ':root', block);
         }))
+        .pipe(sass({ outputStyle: 'expanded'}).on('error', sass.logError))
+        .pipe(autoprefixer({
+            browsers: [
+                "Android 2.3",
+                "Android >= 4",
+                "Chrome >= 20",
+                "Firefox >= 24",
+                "Explorer >= 8",
+                "iOS >= 6",
+                "Opera >= 12",
+                "Safari >= 6"
+            ],
+            cascade: false
+        }))
+        .pipe(gulpStylelint({
+            failAfterError: false,
+            reporters: [
+                { formatter: 'verbose', console: true },
+            ],
+        }))
+        .pipe(concat('blocks.css', { newLine: '\n' }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/assets'));
 });

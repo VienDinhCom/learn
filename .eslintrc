@@ -1,0 +1,14 @@
+{
+	"extends": [
+		"airbnb-base/legacy",
+		"wordpress"
+	],
+	"rules": {
+		"func-names": "off",
+		"no-undef": "error",
+		"spaced-comment": "off"
+  },
+  "globals": {
+    "$": true
+  }
+}

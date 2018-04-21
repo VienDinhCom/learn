@@ -1,3 +1,1 @@
-$(this).click(function() {
-  alert();
-});
+console.log( 1 );
