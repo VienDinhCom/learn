@@ -13,6 +13,7 @@ const tap = require("gulp-tap");
 const bufferReplace = require('buffer-replace');
 const gulpStylelint = require('gulp-stylelint');
 const autoprefixer = require('gulp-autoprefixer');
+
 const blocksDir = 'src/blocks';
 
 gulp.task('scripts', function () {
@@ -22,7 +23,6 @@ gulp.task('scripts', function () {
         .map(block => path.join(blocksDir, block, `${block}.js`));
 
     return gulp.src(blocks)
-        .pipe(sourcemaps.init())
         .pipe(eslint())
         .pipe(eslint.format())
         .pipe(indent({
@@ -37,6 +37,7 @@ gulp.task('scripts', function () {
 
             file.contents = bufferReplace(Buffer(file.contents), '${#block}', block);
         }))
+        .pipe(sourcemaps.init())
         .pipe(concat('blocks.js', { newLine: '\n\n' }))
         .pipe(eslint({ fix: true }))
         .pipe(sourcemaps.write('.'))
@@ -52,6 +53,12 @@ gulp.task('styles', function () {
 
     return gulp.src(blocks)
         .pipe(sourcemaps.init())
+        .pipe(gulpStylelint({
+            failAfterError: false,
+            reporters: [
+                { formatter: 'string', console: true },
+            ],
+        }))
         .pipe(tap(function (file, t) {
 
             const block = `.${path.basename(file.path).replace(path.extname(file.path), '')}`;
@@ -75,7 +82,7 @@ gulp.task('styles', function () {
         .pipe(gulpStylelint({
             failAfterError: false,
             reporters: [
-                { formatter: 'verbose', console: true },
+                { formatter: 'string', console: true },
             ],
         }))
         .pipe(concat('blocks.css', { newLine: '\n' }))

@@ -6,7 +6,8 @@
 	"rules": {
 		"func-names": "off",
 		"no-undef": "error",
-		"spaced-comment": "off"
+		"spaced-comment": "off",
+		"wrap-iife":"off"
   },
   "globals": {
     "$": true

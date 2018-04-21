@@ -1,5 +1,11 @@
-$.fn.extend({
-  exists: function( callback ) {
-    if ( 0 < this.length ) { callback(); }
-  }
-});
+( function( $ ) {
+  $.fn.extend({
+    exists: function( yes, no ) {
+      if ( 0 < this.length ) {
+        yes();
+      } else if ( no ) {
+        no();
+      }
+    }
+  });
+})( $ );
