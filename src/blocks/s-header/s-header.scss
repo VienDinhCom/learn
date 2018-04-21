@@ -1,3 +1,7 @@
-.header {
+.s-header {
   background: #000;
+
+  &--is-dark {
+    background: #000;
+  }
 }

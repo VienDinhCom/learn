@@ -7,13 +7,12 @@ var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var insert = require('gulp-insert');
-inject = require('gulp-inject-string');
+var inject = require('gulp-inject-string');
 var indent = require("gulp-indent");
 var tap = require("gulp-tap");
 const bufferReplace = require('buffer-replace');
+const gulpStylelint = require('gulp-stylelint');
 const blocksDir = 'src/blocks';
-
-console.log(fs.readdirSync(blocksDir));
 
 gulp.task('scripts', function () {
 
@@ -36,8 +35,8 @@ gulp.task('scripts', function () {
             file.contents = bufferReplace(Buffer(file.contents), '${block}', block);
         }))
         .pipe(concat('blocks.js', { newLine: '\n\n' }))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/scripts'));
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('dist/assets'));
 });
 
 gulp.task('styles', function () {
@@ -49,8 +48,13 @@ gulp.task('styles', function () {
 
     return gulp.src(blocks)
         .pipe(sourcemaps.init())
-        .pipe(sass().on('error', sass.logError))
-        .pipe(concat('blocks.css', { newLine: '\n\n' }))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest('dist/styles'));
+        .pipe(sass({ outputStyle: 'expanded'}).on('error', sass.logError))
+        .pipe(concat('blocks.css', { newLine: '\n' }))
+        .pipe(gulpStylelint({
+            reporters: [
+                { formatter: 'string', console: true }
+            ]
+        }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('dist/assets'));
 });

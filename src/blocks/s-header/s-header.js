@@ -1,1 +1,3 @@
-console.log('header');
+$(this).click(function() {
+  alert();
+});

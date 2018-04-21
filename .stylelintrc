@@ -1,0 +1,15 @@
+{
+	"extends": [
+		"stylelint-config-wordpress"
+	],
+	"plugins": [
+    "@namics/stylelint-bem"
+	],
+	"rules": {
+    "indentation": 2,
+    "plugin/stylelint-bem-namics": {
+      "patternPrefixes": [ "s", "mdl", "a", "m", "o", "t", "p" ],
+      "helperPrefixes": [ "is", "has" ]
+    }
+	}
+}
