@@ -1,0 +1,38 @@
+#s-footer {
+  background: #000;
+}
+
+.s-footer--is-dark {
+  background: #000;
+}
+
+.s-header {
+  background: #000;
+  -webkit-transition-duration: 0ms;
+  -o-transition-duration: 0ms;
+  transition-duration: 0ms;
+}
+
+.s-header__shit,
+.s-header__shit .a-cus {
+  background: #000;
+}
+
+.s-header__shit--is-acc,
+.s-header__shit--is-shit {
+  color: #000;
+}
+
+.s-header--is-dark {
+  background: #000;
+}
+
+.s-header--is-dark .s-header__shit {
+  background: #000;
+}
+
+.s-header--is-dark .s-header__shit--is-acc {
+  color: #fff;
+}
+
+/*# sourceMappingURL=blocks.css.map */
