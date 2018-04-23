@@ -53,12 +53,12 @@ gulp.task('styles', function () {
 
     return gulp.src(blocks)
         .pipe(sourcemaps.init())
-        .pipe(gulpStylelint({
-            failAfterError: false,
-            reporters: [
-                { formatter: 'string', console: true },
-            ],
-        }))
+        // .pipe(gulpStylelint({
+        //     failAfterError: false,
+        //     reporters: [
+        //         { formatter: 'string', console: true },
+        //     ],
+        // }))
         .pipe(tap(function (file, t) {
 
             const block = `.${path.basename(file.path).replace(path.extname(file.path), '')}`;

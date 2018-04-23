@@ -11,6 +11,7 @@
     "plugin/stylelint-bem-namics": {
       "patternPrefixes": [ "s", "mdl", "a", "m", "o", "t", "p" ],
       "helperPrefixes": [ "is", "has" ]
-    }
+		},
+		"scss/selector-no-redundant-nesting-selector": true
 	}
 }

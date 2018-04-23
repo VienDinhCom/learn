@@ -2,11 +2,26 @@
   background: #000;
   transition-duration: 0ms;
 
-  &--is-dark {
-    background: #000;
-  }
-
   &__shit {
     background: #000;
+
+    &--is-acc {
+      color: #000;
+    }
+  }
+
+  &--is-dark {
+    background: #000;
+
+    :root {
+
+      &__shit {
+        background: #000;
+
+        &--is-acc {
+          color: #fff;
+        }
+      }
+    }
   }
 }
