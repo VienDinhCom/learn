@@ -6,3 +6,8 @@
 - Hạn chế các prefix: l, m, c, e
 - Thứ tự từ trên xuống dưới: elm, mod
 - Đặt ra exeption cho những thứ không theo BEM.
+  + Phải nằm bên trong elm
+
+
+
+Không dùng SCSS nữa, dùng POSTCSS luôn :D

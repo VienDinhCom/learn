@@ -1,3 +1,5 @@
+// https://css-tricks.com/snippets/jquery/check-if-element-exists/
+
 ( function( $ ) {
   $.fn.extend({
     exists: function( yes, no ) {
