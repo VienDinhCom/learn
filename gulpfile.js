@@ -18,6 +18,10 @@ var layouts = require('handlebars-layouts');
 var rename = require("gulp-rename");
 var prettify = require('gulp-jsbeautifier');
 var htmlmin = require('gulp-htmlmin');
+var validator = require('gulp-html');
+var htmllint = require('gulp-htmllint');
+var fancyLog = require('fancy-log');
+var colors = require('ansi-colors');
 
 const blocksDir = 'src/blocks';
 
@@ -101,21 +105,38 @@ gulp.task('templates', function () {
 
     const blocks = fs.readdirSync(blocksDir)
         .filter(item => fs.lstatSync(path.join(blocksDir, item)).isDirectory())
-        .map(block => path.join(blocksDir, block, `${block}.scss`));
+        .map(block => path.join(blocksDir, block, `${block}.hbs`));
 
 
     return gulp.src('src/*.hbs')
-        .pipe(handlebars().partials('src/*.hbs').helpers(layouts))
+        .pipe(handlebars().partials(blocks).helpers(layouts))
         .pipe(htmlmin({ collapseWhitespace: true }))
+        // .pipe(htmllint({}, function(filepath, issues) {
+        //     if (issues.length > 0) {
+        //         issues.forEach(function (issue) {
+        //             fancyLog(colors.cyan('[gulp-htmllint] ') + colors.white(filepath + ' [' + issue.line + ',' + issue.column + ']: ') + colors.red('(' + issue.code + ') ' + issue.msg));
+        //         });
+
+        //         process.exitCode = 1;
+        //     }
+        // }))
         .pipe(prettify({
             html: {
-                file_types: ['.hbs']
+                file_types: ['.hbs'],
             },
             indent_size: 2,
-            indent_char: ' '
+            indent_char: ' ',
+            indent_inner_html: true,
+            extra_liners: "",
+            end_with_newline: true,
+            editorconfig: true
         }))
         .pipe(rename((path) => {
             path.extname = ".html"
+        }))
+        .pipe(validator({
+            html: true,
+            verbose: true
         }))
         .pipe(gulp.dest('dist'));
 
