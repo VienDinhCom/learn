@@ -1,3 +1,10 @@
-# My Learning Examples &amp; Projects
+# Vien Learns To Code
 
-https://github.com/Maxvien/learning/branches/all
+My exercises: https://github.com/Maxvien/learning/branches/all
+
+## Database
+- [Relational Database](https://www.freecodecamp.org/learn/relational-database): A practical course to learn PostgreSQL
+- [PostgreSQL Exercises](https://pgexercises.com/): A practical website to practice PostgreSQL
+
+
+
